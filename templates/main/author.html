@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h1>Name : {{author.name}}</h1>
+    <h2>Designation : {{author.designation}}</h2>
+    <h4>Articles Written:
+        {% for article in author.article_set.all %}
+            {{article}},
+        {% endfor %}
+    </h4>
+{% endblock %}
