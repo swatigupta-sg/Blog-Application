@@ -40,3 +40,16 @@ def create_article(request):
         "form" : form
     }
     return render(request, 'main/create_article.html', context)
+
+def create_author(request):
+    form = forms.AuthorForm
+    if request.method == "POST":
+        form = forms.AuthorForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            return HttpResponseRedirect('/')
+
+    context = {
+        "form" : form
+    }
+    return render(request, 'main/create_author.html', context)
