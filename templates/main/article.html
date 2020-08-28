@@ -2,10 +2,12 @@
 
 {% block content %}
     <h1>{{article.title}}</h1>
-    <h2>{{aricle.created_at}}</h2>
+    <h2>{{article.created_at}}</h2>
     <h4> Written By:
-        {% for author in article.author.all %}
-            {{author}},
+        {% for author in article.authors.all %}
+            <a href="{% url 'get_author' author.id %}">
+                {{author}},
+            </a>
         {% endfor %}
     </h4>
     <p>

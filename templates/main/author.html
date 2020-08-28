@@ -5,7 +5,9 @@
     <h2>Designation : {{author.designation}}</h2>
     <h4>Articles Written:
         {% for article in author.article_set.all %}
-            {{article}},
+            <a href="{% url 'get_article' article.id %}">
+                {{article}},
+            </a>
         {% endfor %}
     </h4>
 {% endblock %}
