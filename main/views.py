@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponseRedirect
 from main import models
 from main import forms
+from django.views.generic import(
+    CreateView
+)
 
 def index(request):
     articles = models.Article.objects.all().order_by('-created_at')[:10]
@@ -9,6 +12,14 @@ def index(request):
         "articles" : articles
     }
     return render(request, 'main/index.html', context)
+
+def authorlist(request):
+    authors = models.Author.objects.all()
+    context = {
+        "authors" : authors
+    }
+    return render(request, 'main/authorlist.html', context)
+
 
 def article(request,pk):
     article = get_object_or_404(models.Article, pk = pk)
@@ -33,11 +44,11 @@ def create_article(request):
     if request.method == "POST":
         form = forms.ArticleForm(request.POST)
         if form.is_valid():
-            article = form.save()
+            form.save()
             return HttpResponseRedirect('/')
 
     context = {
-        "form" : form
+        "form" : form,
     }
     return render(request, 'main/create_article.html', context)
 
@@ -47,7 +58,7 @@ def create_author(request):
         form = forms.AuthorForm(request.POST)
         if form.is_valid():
             article = form.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/author')
 
     context = {
         "form" : form
